@@ -17,7 +17,6 @@ class CustomerController {
         this.repository = repository;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/customers")
     List<Customer> all() {
         List<Customer> result = new ArrayList<>();
@@ -25,13 +24,11 @@ class CustomerController {
         return result;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/customers")
     Customer newCustomer(@RequestBody Customer newCustomer) {
         return repository.save(newCustomer);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/customers/{id}")
     Customer one(@PathVariable Long id) {
 
@@ -39,7 +36,6 @@ class CustomerController {
                 .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/customers/{id}")
     Customer replaceCustomer(@RequestBody Customer newCustomer, @PathVariable Long id) {
         return repository.findById(id)
@@ -62,7 +58,6 @@ class CustomerController {
                 });
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/customers/{id}")
     void deleteCustomer(@PathVariable Long id) {
         repository.deleteById(id);

@@ -1,0 +1,47 @@
+.full-width {
+  width: 100%;
+}
+
+.mat-card-actions, .mat-card-subtitle, .mat-card-content {
+  display: block;
+  margin-bottom: 0px;
+}
+
+.mat-card-actions {
+  margin-left: -8px;
+  margin-right: -8px;
+  padding: 0px 0;
+}
+
+mat-card {
+  min-width: 120px;
+  margin: 5px auto;
+  padding: 2px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}

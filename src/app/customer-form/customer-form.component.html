@@ -1,0 +1,146 @@
+<form [formGroup]="customerForm" (ngSubmit)="save(false)">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Klant informatie</mat-card-title>
+      <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" type="button" aria-label="Toggle menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="delete()">Remove</button>
+      </mat-menu>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Klant nummer" formControlName="number">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-radio-group formControlName="type">
+            <mat-radio-button value="Particulier">Particulier</mat-radio-button>
+            <mat-radio-button value="Bedrijf">Bedrijf</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Naam" formControlName="name">
+            <mat-error *ngIf="customerForm.controls['name'].hasError('required')">
+              Voornaam is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="customerForm.controls['type'].value === 'Bedrijf' && customerForm.controls['foreign'].value === false">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <span matPrefix *ngIf="customerForm.controls['type'].value === 'Bedrijf' && customerForm.controls['foreign'].value === false">BE &nbsp;</span>
+            <input matInput placeholder="BTW nummer" [attr.maxlength]="customerForm.controls['foreign'].value === false ? '10' : null" formControlName="taxNumber">
+            <mat-error *ngIf="customerForm.controls['taxNumber'].hasError('required')">
+              TaxNumber is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="customerForm.controls['type'].value === 'Bedrijf' && customerForm.controls['foreign'].value === true">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="BTW nummer" formControlName="taxNumber">
+            <mat-error *ngIf="customerForm.controls['taxNumber'].hasError('required')">
+              TaxNumber is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Straat" formControlName="street">
+            <mat-error *ngIf="customerForm.controls['street'].hasError('required')">
+              Straat is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Huisnummer" formControlName="houseNumber">
+                <mat-error *ngIf="customerForm.controls['houseNumber'].hasError('required')">
+                  Huisnummer is <strong>verplicht</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Busnummer" formControlName="boxNumber">
+                <mat-error *ngIf="customerForm.controls['boxNumber'].hasError('required')">
+                  Bus nummer is <strong>verplicht</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput #postalCode maxlength="4" placeholder="Postcode" type="number" formControlName="postalCode">
+            <mat-hint align="end">{{postalCode.value.length}} / 4</mat-hint>
+            <mat-error *ngIf="customerForm.controls['postalCode'].hasError('required')">
+              Postcode is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Gemeente" formControlName="city">
+            <mat-error *ngIf="customerForm.controls['city'].hasError('required')">
+              Gemeente is <strong>verplicht</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="customerForm.controls['foreign'].value === true">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Land" formControlName="country">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Telefoon" formControlName="phone">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Mobile" formControlName="mobile">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox formControlName="foreign" (change)="setForeign($event.checked)">Buitenlandse klant</mat-checkbox>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" *ngIf="this.invoiceAction === null">Bewaar</button>
+      <button mat-raised-button color="primary" (click)="save(true)" *ngIf="this.invoiceAction !== null">Terug naar
+        factuur</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
