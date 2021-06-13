@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -16,20 +15,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(
                 User.withDefaultPasswordEncoder()
                         .username("user")
-                        .password("password")
+                        .password("user")
                         .authorities("USER").build());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.cors().and()
                 .httpBasic().and()
+                .logout().and()
                 .authorizeRequests()
                 .antMatchers("/users/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .anyRequest().authenticated().and()
+                //TODO: It might be safer to enable CSRF (but for now disabled -> otherwise WRITE operations won't work)
+                .csrf().disable();
     }
 
 }
