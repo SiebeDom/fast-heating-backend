@@ -36,6 +36,7 @@ class CustomerController {
                 .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/customers/{id}")
     Customer replaceCustomer(@RequestBody Customer newCustomer, @PathVariable Long id) {
         return repository.findById(id)
@@ -58,6 +59,7 @@ class CustomerController {
                 });
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/customers/{id}")
     void deleteCustomer(@PathVariable Long id) {
         repository.deleteById(id);
