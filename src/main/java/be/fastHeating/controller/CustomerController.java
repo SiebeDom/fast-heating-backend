@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 class CustomerController {
-
     private final CustomerRepository repository;
 
     CustomerController(CustomerRepository repository) {
@@ -40,18 +39,18 @@ class CustomerController {
     @PutMapping("/customers/{id}")
     Customer replaceCustomer(@RequestBody Customer newCustomer, @PathVariable Long id) {
         return repository.findById(id)
-                .map(employee -> {
-                    employee.setType(newCustomer.getType());
-                    employee.setName(newCustomer.getName());
-                    employee.setStreet(newCustomer.getStreet());
-                    employee.setHouseNumber(newCustomer.getHouseNumber());
-                    employee.setBoxNumber(newCustomer.getBoxNumber());
-                    employee.setPostalCode(newCustomer.getPostalCode());
-                    employee.setCity(newCustomer.getCity());
-                    employee.setPhone(newCustomer.getPhone());
-                    employee.setMobile(newCustomer.getMobile());
-                    employee.setEmail(newCustomer.getEmail());
-                    return repository.save(employee);
+                .map(customer -> {
+                    customer.setType(newCustomer.getType());
+                    customer.setName(newCustomer.getName());
+                    customer.setStreet(newCustomer.getStreet());
+                    customer.setHouseNumber(newCustomer.getHouseNumber());
+                    customer.setBoxNumber(newCustomer.getBoxNumber());
+                    customer.setPostalCode(newCustomer.getPostalCode());
+                    customer.setCity(newCustomer.getCity());
+                    customer.setPhone(newCustomer.getPhone());
+                    customer.setMobile(newCustomer.getMobile());
+                    customer.setEmail(newCustomer.getEmail());
+                    return repository.save(customer);
                 })
                 .orElseGet(() -> {
                     newCustomer.setId(id);
